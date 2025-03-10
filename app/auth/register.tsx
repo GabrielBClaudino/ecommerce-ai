@@ -1,7 +1,7 @@
 import React,{ useState } from "react";
 import {Text, View,Image, Alert, StyleSheet, Dimensions, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView} from 'react-native'
 import { useNavigation,NavigationProp  } from '@react-navigation/native';
-import {MaterialIcons, FontAwesome, FontAwesome6} from '@expo/vector-icons';
+import {MaterialIcons, FontAwesome, FontAwesome6, AntDesign} from '@expo/vector-icons';
 import { themas } from "@/global/themes";
 import { Button } from "@/components/Button";
 import { Link } from "expo-router";
@@ -44,8 +44,9 @@ export default function Register (){
         <ScrollView contentContainerStyle={style.scrollContainer} keyboardShouldPersistTaps="handled">
         <View style={style.container}>
             <View style={style.boxTop}>
-                <FontAwesome name="user-circle-o" style={style.logo}></FontAwesome>
-                <Text style={style.text}>Ecommerce IA</Text>
+                <AntDesign name="user" style={style.logo}></AntDesign>
+                <Text style={style.text}>E-Commerce IA</Text>
+                <Text style={style.subtitle}>Cadastre-se Já!</Text>
             </View>
             <View style={style.boxMid}>
                 <Text style={style.titleInput}>ENDEREÇO E-MAIL</Text>
@@ -170,8 +171,8 @@ const style = StyleSheet.create({
         paddingHorizontal:20
     },
     logo:{
-        fontSize:Dimensions.get('window').height/5,
-        color:"#878af6",
+        fontSize:Dimensions.get('window').height/6,
+        color:"#black",
         marginTop:40,
     },
     text:{
@@ -184,6 +185,11 @@ const style = StyleSheet.create({
         height:'100%',
         width:'100%',
         borderRadius:40,
+    },
+    subtitle:{
+        marginLeft:5,
+        fontSize:20,
+        color:themas.Colors.gray,
     },
     button:{
         width:200,

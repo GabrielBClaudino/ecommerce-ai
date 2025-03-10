@@ -14,7 +14,7 @@ const welcome = () => {
      <View style={styles.formContainer}>
         <View style={styles.logoContainer}>
             <SimpleLineIcons style={styles.logo} name="diamond" />
-            <Text style={{color: '#FFF', fontSize:32}}>Ecommerce IA</Text>
+            <Text style={{color: '#FFF', fontSize:32}}>E-Commerce IA</Text>
             <Text style={{color: '#FFF', fontSize:18, marginBottom: 20}}>Seja Bem vindo!</Text>
         </View>
         <TouchableOpacity style={styles.loginButton} onPress={() => router.push('/auth/login')}><Text style={{color: '#FFF'}} >Login</Text></TouchableOpacity>

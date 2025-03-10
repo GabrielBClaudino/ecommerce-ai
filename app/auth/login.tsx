@@ -1,10 +1,10 @@
 import React,{ useState } from "react";
 import {Text, View,Image, Alert, StyleSheet, Dimensions, TextInput} from 'react-native'
 import { useNavigation,NavigationProp  } from '@react-navigation/native';
-import {MaterialIcons, FontAwesome, FontAwesome6} from '@expo/vector-icons';
+import {MaterialIcons, FontAwesome, FontAwesome6, AntDesign} from '@expo/vector-icons';
 import { themas } from "@/global/themes";
 import { Button } from "@/components/Button";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 export default function Login (){
     const navigation = useNavigation<NavigationProp<any>>();
@@ -25,9 +25,11 @@ export default function Login (){
 
             if(email === 'Test' && password === '123'){
                 setLoading(false)
+                router.push('/(tabs)')
                 return Alert.alert('Logado com sucesso!')
             }
 
+            setLoading(false)
             Alert.alert('Atenção!','E-mail ou senha invalida!')
         } catch (error) {
             console.log(error)
@@ -38,8 +40,10 @@ export default function Login (){
     return(
         <View style={style.container}>
             <View style={style.boxTop}>
-                <FontAwesome name="user-circle-o" style={style.logo}></FontAwesome>
-                <Text style={style.text}>Ecommerce IA</Text>
+                <AntDesign name="user" style={style.logo}></AntDesign>
+                <Text style={style.text}>E-Commerce IA</Text>
+                <Text style={style.subtitle}>Entre Agora!</Text>
+                
             </View>
             <View style={style.boxMid}>
             <Text style={style.titleInput}>ENDEREÇO E-MAIL</Text>
@@ -117,13 +121,13 @@ const style = StyleSheet.create({
         paddingHorizontal:20
     },
     logo:{
-        fontSize:Dimensions.get('window').height/5,
-        color:"#878af6",
+        fontSize:Dimensions.get('window').height/6,
+        color:"#black",
         marginTop:40,
     },
     text:{
         marginTop:20,
-        fontSize:26,
+        fontSize:30,
         fontWeight:'bold',
         marginBottom:10
     },
@@ -141,6 +145,11 @@ const style = StyleSheet.create({
         marginLeft:5,
         color:themas.Colors.gray,
         marginTop:20
+    },
+    subtitle:{
+        marginLeft:5,
+        fontSize:20,
+        color:themas.Colors.gray,
     },
     textBottom:{
         paddingTop:20,
