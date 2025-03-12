@@ -6,7 +6,7 @@ USER: Test
 PASSWORD: 123
 ```
 ## Project photos
-<img src="/assets/images/homegit.jpeg" alt="Home Screen" width="300" height="400">
+<img src="/assets/images/homegit.jpeg" alt="Home Screen" width="540" height="1068">
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
