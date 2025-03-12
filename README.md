@@ -1,4 +1,4 @@
-# Welcome to your Expo app 👋
+# Welcome to My Expo app 👋
 
 USER TO ENTER IN PRODUCT LIST:
 ```
@@ -20,11 +20,6 @@ PASSWORD: 123
 
 ### Cart List Screen
 <img src="/assets/images/cartgit.jpeg" alt="Home Screen" width="400" height="768">
-
-
-
-
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
 ## Get started
 
