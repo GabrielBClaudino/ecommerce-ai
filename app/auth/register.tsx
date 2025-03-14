@@ -90,6 +90,7 @@ export default function Register (){
         }
     
         if (!hasError) {
+            Alert.alert('Sucesso', 'Registrado com sucesso!');
             router.replace('/auth/login');
         }
     };
