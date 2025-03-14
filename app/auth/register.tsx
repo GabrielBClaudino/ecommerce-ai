@@ -90,7 +90,7 @@ export default function Register (){
         }
     
         if (!hasError) {
-            router.replace('/(tabs)');
+            router.replace('/auth/login');
         }
     };
     
