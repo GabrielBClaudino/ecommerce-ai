@@ -1,40 +1,54 @@
 import React,{ useState } from "react";
-import {Text, View,Image, Alert, StyleSheet, Dimensions, TextInput} from 'react-native'
-import { useNavigation,NavigationProp  } from '@react-navigation/native';
-import {MaterialIcons, FontAwesome, FontAwesome6, AntDesign} from '@expo/vector-icons';
+import {Text, View, Alert, StyleSheet, Dimensions, TextInput} from 'react-native'
+import {MaterialIcons, FontAwesome6, AntDesign} from '@expo/vector-icons';
 import { themas } from "@/global/themes";
 import { Button } from "@/components/Button";
 import { Link, router } from "expo-router";
 
 export default function Login (){
-    const navigation = useNavigation<NavigationProp<any>>();
 
-    const [email,setEmail]               = useState('');
-    const [password,setPassword]         = useState('');
-    const [loading,setLoading]           = useState(false);
+    const [email,setEmail] = useState({value: '',dirty: false});
+    const [password,setPassword] = useState({value: '',dirty: false});
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-
-    async function getLogin() {
-        try {
-            setLoading(true)
-            
-            if(!email ||!password){
-                setLoading(false)
-                return Alert.alert('Atenção!','Informe os campos obrigatórios!')
-            }
-
-            if(email === 'Test' && password === '123'){
-                setLoading(false)
-                router.push('/(tabs)')
-                return Alert.alert('Logado com sucesso!')
-            }
-
-            setLoading(false)
-            Alert.alert('Atenção!','E-mail ou senha invalida!')
-        } catch (error) {
-            console.log(error)
+    const handleErrorEmail = () => {
+        if(!email.value && email.dirty) {
+            return <Text style={style.error}>Campo obrigatório</Text>
+        } else if (!emailRegex.test(email.value) && email.dirty) {
+            return <Text style={style.error}>E-mail inválido</Text>
+        } else {
+            return <Text style={style.error}></Text> 
         }
     }
+    const handleErrorPassword = () => {
+        if(!password.value && password.dirty) {
+            return <Text style={style.error}>Campo obrigatório</Text>
+        } else {
+            return <Text style={style.error}></Text> 
+        }
+    }
+    const handleErrorForm = () => {
+        let hasError = false;
+        if(!password.value) {
+          setPassword({value: password.value, dirty: true})
+          hasError = true;
+        }
+    
+        if(!email.value) {
+          setEmail({value: email.value, dirty: true})
+          hasError = true
+        }
+        
+        if (!emailRegex.test(email.value)) {
+          setEmail({value: email.value, dirty: true})
+          hasError = true
+        }
+    
+        if(!hasError) {
+            router.replace('/(tabs)')
+        }
+      } 
+    
 
 
     return(
@@ -48,11 +62,7 @@ export default function Login (){
             <View style={style.boxMid}>
             <Text style={style.titleInput}>ENDEREÇO E-MAIL</Text>
             <View style={style.boxInput}>
-            <TextInput 
-            style={style.input}
-            value={email}
-            onChangeText={setEmail}
-            />
+            <TextInput style={style.input} placeholder='E-mail' onChangeText={(text) => {setEmail({value: text, dirty: true})}}/>
             <FontAwesome6
             style={{marginHorizontal:-10}}
             name="user-large"
@@ -60,12 +70,12 @@ export default function Login (){
             color={themas.Colors.gray}
             />
             </View>
+            {handleErrorEmail()}
             <Text style={style.titleInput}>SENHA</Text>
             <View style={style.boxInput}>
             <TextInput 
             style={style.input}
-            value={password}
-            onChangeText={setPassword}
+            placeholder='Senha' onChangeText={(text) => {setPassword({value: text, dirty: true})}}
             secureTextEntry
             />
             <MaterialIcons
@@ -75,9 +85,10 @@ export default function Login (){
             color={themas.Colors.gray}
             />
             </View>
+            {handleErrorPassword()}
             </View>
             <View style={style.boxBottom}>
-                <Button  text="ENTRAR" loading={loading} onPress={()=>getLogin()}/>
+                <Button  text="ENTRAR" onPress={()=> handleErrorForm()}/>
             <Text style={style.textBottom}>Não tem conta? <Link href={"/auth/register"}><Text  style={style.textBottomCreate}>Crie agora</Text></Link></Text>
             </View>
         </View>
@@ -90,11 +101,21 @@ const style = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
+    error:{
+        width: '100%',
+        marginLeft:20,
+        marginBottom: 0,
+        color: 'red',
+        fontWeight: 'bold',
+        height: 20,
+        fontSize: 14
+    },
     boxTop:{
         height:Dimensions.get('window').height/3,
         width:'100%',
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        marginBottom: 2,
     },
     boxMid:{
         height:Dimensions.get('window').height/4,
@@ -105,8 +126,7 @@ const style = StyleSheet.create({
         height:Dimensions.get('window').height/3,
         width:'100%',
         alignItems:'center',
-        justifyContent:'flex-start'
-        
+        justifyContent:'flex-start',
     },
     boxInput:{
         width:'100%',
@@ -144,7 +164,7 @@ const style = StyleSheet.create({
     titleInput:{
         marginLeft:5,
         color:themas.Colors.gray,
-        marginTop:20
+        marginTop:5
     },
     subtitle:{
         marginLeft:5,

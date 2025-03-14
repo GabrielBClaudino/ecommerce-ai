@@ -1,10 +1,5 @@
 # Welcome to My Expo app 👋
 
-USER TO ENTER IN PRODUCT LIST:
-```
-USER: Test
-PASSWORD: 123
-```
 ## Project photos
 ### Home Screen
 <img src="/assets/images/homegit.jpeg" alt="Home Screen" width="400" height="768">

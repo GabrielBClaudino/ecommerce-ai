@@ -1,38 +1,99 @@
 import React,{ useState } from "react";
-import {Text, View,Image, Alert, StyleSheet, Dimensions, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView} from 'react-native'
-import { useNavigation,NavigationProp  } from '@react-navigation/native';
-import {MaterialIcons, FontAwesome, FontAwesome6, AntDesign} from '@expo/vector-icons';
+import {Text, View, Alert, StyleSheet, Dimensions, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView} from 'react-native'
+import {MaterialIcons, FontAwesome6, AntDesign} from '@expo/vector-icons';
 import { themas } from "@/global/themes";
-import { Button } from "@/components/Button";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 export default function Register (){
-    const navigation = useNavigation<NavigationProp<any>>();
-
-    const [email,setEmail]               = useState('');
-    const [password,setPassword]         = useState('');
-    const [name,setName]         = useState('');
-    const [cpf,setCpf]         = useState('');
-    const [loading,setLoading]           = useState(false);
-
-
-    async function getRegister() {
-        try {
-            setLoading(true)
-            
-            if(!email ||!password ||!cpf ||!name){
-                setLoading(false)
-                return Alert.alert('Atenção!','Informe os campos obrigatórios!')
-            }
-
-            
-            setLoading(false)
-            return Alert.alert('Registrado com sucesso!')
-            
-        } catch (error) {
-            console.log(error)
+    const [email,setEmail] = useState({value: '',dirty: false});
+    const [password,setPassword] = useState({value: '',dirty: false});
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const [name, setName] = useState({ value: '', dirty: false });
+    const [cpf, setCpf] = useState({ value: '', dirty: false });
+    const nameRegex = /^.{2,}$/;
+    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+    
+    const handleErrorEmail = () => {
+        if(!email.value && email.dirty) {
+            return <Text style={style.error}>Campo obrigatório</Text>
+        } else if (!emailRegex.test(email.value) && email.dirty) {
+            return <Text style={style.error}>E-mail inválido</Text>
+        } else {
+            return <Text style={style.error}></Text> 
         }
     }
+
+    const handleErrorPassword = () => {
+        if(!password.value && password.dirty) {
+            return <Text style={style.error}>Campo obrigatório</Text>
+        } else {
+            return <Text style={style.error}></Text> 
+        }
+    }
+
+    const handleErrorName = () => {
+        if (!name.value && name.dirty) {
+            return <Text style={style.error}>Campo obrigatório</Text>;
+        } else if (!nameRegex.test(name.value) && name.dirty) {
+            return <Text style={style.error}>Nome deve ter no mínimo 2 caracteres</Text>;
+        } else {
+            return <Text style={style.error}></Text>;
+        }
+    };
+    
+    const handleErrorCpf = () => {
+        if (!cpf.value && cpf.dirty) {
+            return <Text style={style.error}>Campo obrigatório</Text>;
+        } else if (!cpfRegex.test(cpf.value) && cpf.dirty) {
+            return <Text style={style.error}>CPF inválido (use o formato 000.000.000-00)</Text>;
+        } else {
+            return <Text style={style.error}></Text>;
+        }
+    };
+    
+    const handleErrorForm = () => {
+        let hasError = false;
+    
+        if (!password.value) {
+            setPassword({ value: password.value, dirty: true });
+            hasError = true;
+        }
+    
+        if (!email.value) {
+            setEmail({ value: email.value, dirty: true });
+            hasError = true;
+        }
+    
+        if (!emailRegex.test(email.value)) {
+            setEmail({ value: email.value, dirty: true });
+            hasError = true;
+        }
+    
+        if (!name.value) {
+            setName({ value: name.value, dirty: true });
+            hasError = true;
+        }
+    
+        if (!nameRegex.test(name.value)) {
+            setName({ value: name.value, dirty: true });
+            hasError = true;
+        }
+    
+        if (!cpf.value) {
+            setCpf({ value: cpf.value, dirty: true });
+            hasError = true;
+        }
+    
+        if (!cpfRegex.test(cpf.value)) {
+            setCpf({ value: cpf.value, dirty: true });
+            hasError = true;
+        }
+    
+        if (!hasError) {
+            router.replace('/(tabs)');
+        }
+    };
+    
 
 
     return(
@@ -51,11 +112,7 @@ export default function Register (){
             <View style={style.boxMid}>
                 <Text style={style.titleInput}>ENDEREÇO E-MAIL</Text>
                 <View style={style.boxInput}>
-                <TextInput 
-                style={style.input}
-                value={email}
-                onChangeText={setEmail}
-                />
+                <TextInput style={style.input} placeholder='E-mail' onChangeText={(text) => {setEmail({value: text, dirty: true})}}/>
                 <MaterialIcons
                     style={{marginHorizontal:-10}}
                     name="email"
@@ -64,16 +121,13 @@ export default function Register (){
                     />
 
                 </View>
+                {handleErrorEmail()}
 
                 
 
                 <Text style={style.titleInput}>NOME COMPLETO</Text>
                 <View style={style.boxInput}>
-                <TextInput 
-                    style={style.input}
-                    value={name}
-                    onChangeText={setName}
-                />
+                <TextInput style={style.input} placeholder='Nome' onChangeText={(text) => {setName({value: text, dirty: true})}}/>
                 <FontAwesome6
                     style={{marginHorizontal:-10}}
                     name="user-large"
@@ -81,14 +135,11 @@ export default function Register (){
                     color={themas.Colors.gray}
                     />
                 </View>
+                {handleErrorName()}
 
                 <Text style={style.titleInput}>CPF</Text>
                 <View style={style.boxInput}>
-                <TextInput 
-                    style={style.input}
-                    value={cpf}
-                    onChangeText={setCpf}
-                />
+                <TextInput style={style.input} placeholder='CPF' onChangeText={(text) => {setCpf({value: text, dirty: true})}}/>
                 <MaterialIcons
                     style={{marginHorizontal:-10}}
                     name="shield"
@@ -96,15 +147,11 @@ export default function Register (){
                     color={themas.Colors.gray}
                     />
                 </View>
+                {handleErrorCpf()}
 
                 <Text style={style.titleInput}>SENHA</Text>
                 <View style={style.boxInput}>
-                <TextInput 
-                    style={style.input}
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                />
+                <TextInput style={style.input} placeholder='Senha' onChangeText={(text) => {setPassword({value: text, dirty: true})}} secureTextEntry/>
                 <MaterialIcons
                     style={{marginHorizontal:-10}}
                     name="remove-red-eye"
@@ -112,11 +159,12 @@ export default function Register (){
                     color={themas.Colors.gray}
                     />
                 </View>
+                {handleErrorPassword()}
 
             </View>
               
             <View style={style.boxBottom}>
-            <TouchableOpacity style={style.button} onPress={()=> getRegister()}
+            <TouchableOpacity style={style.button} onPress={()=> handleErrorForm()}
                 ><Text style={style.textBottom}>REGISTRAR</Text></TouchableOpacity> 
              
             </View>
@@ -134,6 +182,15 @@ const style = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
+    error:{
+        width: '100%',
+        marginLeft:20,
+        marginBottom: 0,
+        color: 'red',
+        fontWeight: 'bold',
+        height: 20,
+        fontSize: 14
+    },
     scrollContainer: {
         flexGrow: 1,
         justifyContent: 'center',
@@ -145,6 +202,7 @@ const style = StyleSheet.create({
         width:'100%',
         alignItems:'center',
         justifyContent:'center',
+        marginBottom: 2,
     },
     boxMid:{
         flex:1, // Permite que os inputs ocupem o espaço necessário
@@ -156,7 +214,7 @@ const style = StyleSheet.create({
         width:'100%',
         alignItems:'center',
         justifyContent:'flex-start',
-        marginTop: 20 // Garante um espaçamento entre os inputs e o botão
+        marginTop: 10 // Garante um espaçamento entre os inputs e o botão
     },
     boxInput:{
         width:'100%',
@@ -198,7 +256,6 @@ const style = StyleSheet.create({
         justifyContent:'center',
         backgroundColor:themas.Colors.primary,
         borderRadius:40,
-        marginTop: 20, // Garante que o botão fique abaixo dos inputs
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -216,7 +273,7 @@ const style = StyleSheet.create({
     titleInput:{
         marginLeft:5,
         color:themas.Colors.gray,
-        marginTop:20
+        marginTop:5
     },
     textBottom:{
         fontSize:16,
