@@ -33,7 +33,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useCart() {
+export default function useCart() {
   const context = useContext(CartContext);
   if (!context) {
     throw new Error("useCart deve ser usado dentro de um CartProvider");

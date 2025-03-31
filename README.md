@@ -1,6 +1,20 @@
-# Welcome to your Expo app 👋
+# Welcome to My Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Project photos
+### Home Screen
+<img src="/ai-ecomerce-front-end/assets/images/homegit.jpeg" alt="Home Screen" width="400" height="768">
+
+### Login Screen
+<img src="/ai-ecomerce-front-end/assets/images/logingit.jpeg" alt="Home Screen" width="400" height="768">
+
+### Register Screen
+<img src="/ai-ecomerce-front-end/assets/images/registergit.jpeg" alt="Home Screen" width="400" height="768">
+
+### Product List Screen
+<img src="/ai-ecomerce-front-end/assets/images/productgit.jpeg" alt="Home Screen" width="400" height="768">
+
+### Cart List Screen
+<img src="/ai-ecomerce-front-end/assets/images/cartgit.jpeg" alt="Home Screen" width="400" height="768">
 
 ## Get started
 

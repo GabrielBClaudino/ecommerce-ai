@@ -1,4 +1,4 @@
-import { useCart } from './CartContext';
+import useCart from './CartContext';
 import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
