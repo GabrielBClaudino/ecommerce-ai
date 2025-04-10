@@ -39,7 +39,7 @@ const changeName = () => {
           }}
           onChangeText={(text) => setUserLogged(text)}
           placeholderTextColor="#888"
-          placeholder="Digite seu nome"
+          placeholder="Digite seu nome fantasia"
         />
         <TouchableOpacity
           disabled={userLogged.trim() === ''}

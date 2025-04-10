@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import httpService from '../services/httpService';
 export default function CartScreen() {
   const { cart, removeFromCart , clearCart } = useCart();
-  const SERVER_URL = 'http://192.168.0.100:3000';
+  const SERVER_URL = 'http://10.5.3.100:3000';
 
   const finalizePurchase = async () => {
     try {

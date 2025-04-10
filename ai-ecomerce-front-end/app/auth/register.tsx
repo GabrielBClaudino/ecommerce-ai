@@ -6,7 +6,7 @@ import { Link, router } from "expo-router";
 
 import httpService from '../services/httpService'
 export default function Register (){
-    const SERVER_URL = 'http://192.168.0.100:3000'
+    const SERVER_URL = 'http://10.5.3.100:3000'
 
     const [email,setEmail] = useState({value: '',dirty: false});
     const [password,setPassword] = useState({value: '',dirty: false});
@@ -23,7 +23,7 @@ export default function Register (){
             cpf: cpf.value,
             password:password.value
         }
-        const result = await httpService.post(`${SERVER_URL}/api/user`, json)
+        const result = await httpService.post(`${SERVER_URL}/api/register`, json)
         console.log(result)
         Alert.alert('Sucesso', 'Registrado com sucesso!');
         router.replace('/auth/login');

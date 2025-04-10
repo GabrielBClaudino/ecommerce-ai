@@ -18,7 +18,7 @@ interface Product {
 export default function HomeScreen() {
   const { addToCart, cart } = useCart();
   const [products, setProducts] = useState<Product[]>([]); // Corrigido o tipo aqui
-  const SERVER_URL = 'http://192.168.0.100:3000';
+  const SERVER_URL = 'http://10.5.3.100:3000';
 
   async function getProducts() {
     try {

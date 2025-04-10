@@ -46,8 +46,9 @@ export default function TabLayout() {
                   anchor={<TouchableOpacity style={{marginEnd:16}} onPress={() => setShow(true)}><MaterialCommunityIcons size={26} name="dots-vertical" color="#000" /></TouchableOpacity>}
                 >
                   <Menu.Item onPress={() => {}} title="Perfil" />
-                  <Menu.Item onPress={() => {}} title="Configurações" />               
-                  <Menu.Item onPress={() => {router.push('/chat/changeName')}} title="Conversar com a IA" />
+                  <Menu.Item onPress={() => {}} title="Configurações" />
+                  <Menu.Item onPress={() => {router.push('/chat/changeName')}} title="Chat entre os clientes" />
+                  <Menu.Item onPress={() => {router.push('/chat/chatAI')}} title="Conversar com a IA" />
                   <Divider />
                   <Menu.Item onPress={() => {router.push('/welcome')}} title="Sair" />
                 </Menu>

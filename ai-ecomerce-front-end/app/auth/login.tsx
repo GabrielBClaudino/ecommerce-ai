@@ -5,8 +5,11 @@ import { themas } from "@/global/themes";
 import { Button } from "@/components/Button";
 import { Link, router } from "expo-router";
 
-export default function Login (){
+import httpService from '../services/httpService'
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export default function Login (){
     const [email,setEmail] = useState({value: '',dirty: false});
     const [password,setPassword] = useState({value: '',dirty: false});
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -27,7 +30,7 @@ export default function Login (){
             return <Text style={style.error}></Text> 
         }
     }
-    const handleErrorForm = () => {
+    const handleErrorForm = async () => {
         let hasError = false;
         if(!password.value) {
           setPassword({value: password.value, dirty: true})
@@ -45,7 +48,19 @@ export default function Login (){
         }
     
         if(!hasError) {
-            router.replace('/(tabs)')
+            try {
+                const SERVER_URL = 'http://10.5.3.100:3000'
+                const response = await httpService.post(`${SERVER_URL}/api/login`, {email: email.value, password: password.value})
+                AsyncStorage.setItem("userId", response.user._id);
+                AsyncStorage.setItem("authToken", response.token);
+                AsyncStorage.setItem("userName", response.user.name);
+                router.replace('/(tabs)')
+                console.log(response.token)
+                console.log(response.user._id)
+                console.log(response.user.name)
+            } catch (error) {
+                Alert.alert('Erro', 'E-mail ou senha inválidos');
+            }
         }
       } 
     

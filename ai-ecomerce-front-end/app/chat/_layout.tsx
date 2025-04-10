@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { router, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -14,14 +14,19 @@ import { Ionicons } from '@expo/vector-icons';
 SplashScreen.preventAutoHideAsync();
 
 export default function chatLayout() {
+  const isNavigating = useRef(false);
   
   return (
     //<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="chatName" options={{ headerShown: true , headerTitle:' Chat com WebSocket', headerLeft:()=>{
-            return (<TouchableOpacity onPress={()=> router.replace('/chat/changeName')} ><Ionicons name ='arrow-back' color= 'black' size={26}/></TouchableOpacity>)
-        }}}/>
-        <Stack.Screen name="changeName" options={{ headerTitle:' Apenas coloque o nome para entrar no Chat' }} />
+        <Stack.Screen name="chatName" options={{ headerShown: true , headerTitle:'Chat WebSocket'}}/>
+        <Stack.Screen name="changeNameAI" options={{ headerTitle:' Apenas coloque o nome para entrar no Chat' }} />
+        <Stack.Screen
+        name="chatAI"
+        options={{
+          headerTitle: ' AI Ecommerce Chat', 
+        }}
+      />
         <Stack.Screen name="balloon" options={{ headerShown: false }} />
       </Stack>
       //<StatusBar style="auto" />
