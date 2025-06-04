@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import productRouter from './routes/ProductRouter.js';
+import productRouter from './routes/productRouter.js';
 import userRouter from './routes/UserRouter.js';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
